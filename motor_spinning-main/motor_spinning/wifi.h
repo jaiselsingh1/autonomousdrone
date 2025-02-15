@@ -20,7 +20,6 @@
 
 #ifndef AERSP_WIFI
 #define AERSP_WIFI
-
 #include <WiFiS3.h>
 #include <Arduino.h>
 
