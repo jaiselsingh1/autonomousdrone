@@ -1,5 +1,7 @@
 #include "mixer.h"
 #include <algorithm>
+#define LIMIT(x,xl,xu) ((x)>=(xu)?(xu):((x)<(xl)?(xl):(x)))
+
 
 Mixer::Mixer() {}
 Mixer::~Mixer() {}
@@ -16,19 +18,42 @@ float Mixer::scaleCommand(float input) {
 
 void Mixer::mix(float throttle, float roll, float pitch, float yaw, 
                 uint16_t pwm_out[NUM_MOTORS]) {
+
+                    
     float thr_pwm = scaleThrottle(throttle);
     float roll_pwm = scaleCommand(roll);
     float pitch_pwm = scaleCommand(pitch);
     float yaw_pwm = scaleCommand(yaw);
 
     // Mixing matrix (matches your reference implementation)
-    pwm_out[0] = thr_pwm - roll_pwm + pitch_pwm + yaw_pwm;  // Front right CW
-    pwm_out[1] = thr_pwm - roll_pwm - pitch_pwm - yaw_pwm;  // Back right CCW
-    pwm_out[2] = thr_pwm + roll_pwm - pitch_pwm + yaw_pwm;  // Back left CW
-    pwm_out[3] = thr_pwm + roll_pwm + pitch_pwm - yaw_pwm;  // Front left CCW
+    pwm_out[0] = LIMIT(thr_pwm - roll_pwm + pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);  // Front right CW
+    pwm_out[1] = LIMIT(thr_pwm - roll_pwm - pitch_pwm - yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Back right CCW
+    pwm_out[2] = LIMIT(thr_pwm + roll_pwm - pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Back left CW
+    pwm_out[3] = LIMIT(thr_pwm + roll_pwm + pitch_pwm - yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Front left CCW
+
+    
+    
+    Serial.print(pwm_out[0]) ;  Serial.print(", "); 
+    Serial.print(pwm_out[1]) ;  Serial.print(", "); 
+    Serial.print(pwm_out[2]) ;  Serial.print(", "); 
+    Serial.print(pwm_out[3]) ;  Serial.print(", \n"); 
+
+
+    // Serial.print(thr_pwm) ;  Serial.print(", "); 
+    // Serial.print(roll_pwm) ;  Serial.print(", "); 
+    // Serial.print(pitch) ;  Serial.print(", "); 
+    // Serial.print(yaw_pwm) ;  Serial.print(", "); 
+    // Serial.print(", \n"); 
+
+    // Serial.print(throttle) ;  Serial.print(", "); 
+    // Serial.print(roll) ;  Serial.print(", "); 
+    // Serial.print(pitch) ;  Serial.print(", "); 
+    // Serial.print(", \n"); 
+
+
 
     // Constrain outputs
-    for(uint8_t i = 0; i < NUM_MOTORS; i++) {
-        pwm_out[i] = std::max(std::min(pwm_out[i], (uint16_t)MAX_PWM_OUT), (uint16_t)MIN_PWM_OUT);
-    }
+    // for(uint8_t i = 0; i < NUM_MOTORS; i++) {
+    //     pwm_out[i] = std::max(std::min(pwm_out[i], (uint16_t)MAX_PWM_OUT), (uint16_t)MIN_PWM_OUT);
+    // }
 }

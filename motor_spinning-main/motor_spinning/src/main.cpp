@@ -12,6 +12,9 @@
 #include "controller.h"
 #include "mixer.h"
 #include <Arduino.h>
+float manualMap(float x, float in_min, float in_max, float out_min, float out_max) {
+    return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
 
 
 
@@ -59,10 +62,15 @@ void loop() {
     
     if(rc.rc_in.AUX > 1500) {
         // Manual RC control mode
-        float throttle = map(rc.rc_in.THR, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
-        float roll = map(rc.rc_in.ROLL, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
-        float pitch = map(rc.rc_in.PITCH, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
-        float yaw = map(rc.rc_in.YAW, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
+        float throttle = manualMap(rc.rc_in.THR, 1000, 2000, -1.0, 1.0);
+        float roll = manualMap(rc.rc_in.ROLL, 1000, 2000, -1.0, 1.0);
+        float pitch = manualMap(rc.rc_in.PITCH, 1000, 2000, -1.0, 1.0);
+        float yaw = manualMap(rc.rc_in.YAW, 1000, 2000, -1.0, 1.0);
+
+        // Serial.print(rc.rc_in.THR) ;  Serial.print(", "); 
+        // Serial.print(throttle) ;  Serial.print(", "); 
+        // Serial.print(pitch) ;  Serial.print(", "); 
+        // Serial.print(", \n"); 
         
         // Mix directly from RC inputs
         mixer.mix(throttle, roll, pitch, yaw, pwm);
@@ -87,7 +95,7 @@ void loop() {
     
     if (currentMillis - previousMillis >= interval) {
         previousMillis = currentMillis;
-        rc.print(); // should be commented out for flight
+     //   rc.print(); // should be commented out for flight
     }
     
     // read/write datalink msg
