@@ -24,8 +24,8 @@
 #include "pwm.h"
 
 #define NUM_MOTORS 4
-#define MIN_PWM_OUT 900
-#define MAX_PWM_OUT 1900
+#define MIN_PWM_OUT 950
+#define MAX_PWM_OUT 1950
 
 class Motors
 {
