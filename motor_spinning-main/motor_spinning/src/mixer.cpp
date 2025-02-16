@@ -31,13 +31,16 @@ void Mixer::mix(float throttle, float roll, float pitch, float yaw,
     pwm_out[2] = LIMIT(thr_pwm + roll_pwm - pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Back left CW
     pwm_out[3] = LIMIT(thr_pwm + roll_pwm + pitch_pwm - yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Front left CCW
 
-    
+    if ((pwm_out[0] < 910) && (pwm_out[2] < 910) && (pwm_out[3] < 910) && (pwm_out[1] < 950)) {
+        pwm_out[1] = 900;
+    }
     
     Serial.print(pwm_out[0]) ;  Serial.print(", "); 
     Serial.print(pwm_out[1]) ;  Serial.print(", "); 
     Serial.print(pwm_out[2]) ;  Serial.print(", "); 
     Serial.print(pwm_out[3]) ;  Serial.print(", \n"); 
 
+ 
 
     // Serial.print(thr_pwm) ;  Serial.print(", "); 
     // Serial.print(roll_pwm) ;  Serial.print(", "); 

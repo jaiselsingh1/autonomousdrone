@@ -39,7 +39,7 @@ void setup() {
     
     // initialize motors/servos
     motors.init();
-    // motors.calibrate();
+    motors.calibrate();
     
     // Initialize controller with gains
     controller.setPIDGains(kp, ki, kd);
@@ -81,7 +81,7 @@ void loop() {
 
         } else {
             // Autonomous/GCS mode
-            float c_delf = 0, c_delm0 = 0, c_delm1 = 0, c_delm2 = 0;
+            //float c_delf = 0, c_delm0 = 0, c_delm1 = 0, c_delm2 = 0;
             
             // Update controller with current state
             //controller.updateControl(dt, 0,  // phiCmd
@@ -93,7 +93,11 @@ void loop() {
             //                      c_delf, c_delm0, c_delm1, c_delm2);
             
             // Mix controller outputs
-            mixer.mix(c_delf, c_delm0, c_delm1, c_delm2, pwm);
+            //mixer.mix(c_delf, c_delm0, c_delm1, c_delm2, pwm);
+            pwm[0] = MIN_PWM_OUT ;
+            pwm[1] = MIN_PWM_OUT ;
+            pwm[2] = MIN_PWM_OUT ;
+            pwm[3] = MIN_PWM_OUT ; 
             //Serial.println("AUTO");
         }  
     }else{ 
