@@ -20,6 +20,7 @@ void Mixer::mix(float throttle, float roll, float pitch, float yaw,
                 uint16_t pwm_out[NUM_MOTORS]) {
 
                     
+    // Manual bias elimination
     float thr_pwm = scaleThrottle(throttle);
     float roll_pwm = scaleCommand(roll) + 10;
     float pitch_pwm = scaleCommand(pitch) + 10;
