@@ -3,10 +3,25 @@
 
 #include <cmath>
 
+// void controller_setup();
+
+#include <cstdint>
+
 class Controller {
 public:
     Controller();
     ~Controller();
+
+    float thr_pwm;
+    float roll_pwm;
+    float pitch_pwm;
+    float yaw_pwm;
+    float pwmout_0;
+    float pwmout_1;
+    float pwmout_2;
+    float pwmout_3;
+    void controller_loop();
+    void print();
 
     void updateControl(const float dt, const float phiCmd,
                       const float posDes_x, const float posDes_y, const float posDes_z,
@@ -25,6 +40,9 @@ private:
     float KP[3];  // Roll, Pitch, Yaw
     float KI[3];
     float KD[3];
+
+  
+    // float delftrim = 0.01;
 
     // Outer loop gains for position control
     float KPol[3];  // X, Y, Z

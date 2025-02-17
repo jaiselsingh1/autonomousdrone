@@ -22,9 +22,9 @@ void Mixer::mix(float throttle, float roll, float pitch, float yaw,
                     
     // Manual bias elimination
     float thr_pwm = scaleThrottle(throttle);
-    float roll_pwm = scaleCommand(roll) + 10;
-    float pitch_pwm = scaleCommand(pitch) + 10;
-    float yaw_pwm = scaleCommand(yaw) + 15;
+    float roll_pwm = scaleCommand(roll);
+    float pitch_pwm = scaleCommand(pitch);
+    float yaw_pwm = scaleCommand(yaw);
 
     // Mixing matrix (matches your reference implementation)
     pwm_out[0] = LIMIT(thr_pwm - roll_pwm - pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);  // Front right CW
@@ -36,17 +36,17 @@ void Mixer::mix(float throttle, float roll, float pitch, float yaw,
         pwm_out[1] = 900;
     }
 
-/*
-    Serial.print(pitch_pwm) ;  Serial.print(", "); 
-    Serial.print(thr_pwm) ;  Serial.print(", "); 
-    Serial.print(roll_pwm) ;  Serial.print(", "); 
-    Serial.print(yaw_pwm) ;  Serial.print(", \n"); 
+
+    // Serial.print(pitch_pwm) ;  Serial.print(", "); 
+    // Serial.print(thr_pwm) ;  Serial.print(", "); 
+    // Serial.print(roll_pwm) ;  Serial.print(", "); 
+    // Serial.print(yaw_pwm) ;  Serial.print(", \n"); 
     
-    Serial.print(pwm_out[0]) ;  Serial.print(", "); 
-    Serial.print(pwm_out[1]) ;  Serial.print(", "); 
-    Serial.print(pwm_out[2]) ;  Serial.print(", "); 
-    Serial.print(pwm_out[3]) ;  Serial.print(", \n"); 
-*/
+    // Serial.print(pwm_out[0]) ;  Serial.print(", "); 
+    // Serial.print(pwm_out[1]) ;  Serial.print(", "); 
+    // Serial.print(pwm_out[2]) ;  Serial.print(", "); 
+    // Serial.print(pwm_out[3]) ;  Serial.print(", \n"); 
+
 
     // Serial.print(throttle) ;  Serial.print(", "); 
     // Serial.print(roll) ;  Serial.print(", "); 

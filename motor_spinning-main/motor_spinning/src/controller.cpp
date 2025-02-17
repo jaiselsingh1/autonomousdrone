@@ -1,9 +1,19 @@
 #include "controller.h"
 #include <cmath>
+#include "rc_pilot.h"
+#include "sensors.h"
+
+#define LIMIT(x,xl,xu) ((x)>=(xu)?(xu):((x)<(xl)?(xl):(x)))
+
+extern RC_PILOT rc;
+extern Sensors sens;
+
 
 #ifndef C_PI
 #define C_PI 3.14159265358979323846264338327950288419716939937511
 #endif
+
+
 
 Controller::Controller() {
     // Initialize arrays to zero
@@ -24,6 +34,10 @@ double Controller::hmodRad(double h) {
     dh = h - C_PI * 2 * i;
     return dh;
 }
+
+
+
+
 
 void Controller::updateControl(const float dt, const float phiCmd,
                              const float posDes_x, const float posDes_y, const float posDes_z,
