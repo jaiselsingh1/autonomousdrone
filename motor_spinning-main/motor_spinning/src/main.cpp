@@ -110,7 +110,7 @@ void loop() {
             float throttle = manualMap(rc.rc_in.THR - KG[0], 1000, 2000, -1.0, 1.0);
             float roll = manualMap(rc.rc_in.ROLL - KG[1] * sens.data.gyr[1], 1000, 2000, -1.0, 1.0);
             float pitch = manualMap(rc.rc_in.PITCH - KG[2] * sens.data.gyr[2], 1000, 2000, -1.0, 1.0);
-            float yaw = manualMap(rc.rc_in.YAW  + KG[3] * sens.data.gyr[3], 1000, 2000, -1.0, 1.0);
+            float yaw = manualMap(rc.rc_in.YAW  + KG[3] * sens.data.gyr[3], 1000, 2000, -1.0, 1.0); //to match pozyx orentiation for yaw
 
 
           
