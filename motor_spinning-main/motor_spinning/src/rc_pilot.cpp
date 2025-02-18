@@ -177,8 +177,8 @@ void RC_PILOT::update()
   //Serial.print("\n");
   this->rc_in.ROLL = manualMap2(this->rc_in.ROLL,this->rc_in.ROLL_MIN, this->rc_in.ROLL_MID  , this->rc_in.ROLL_MAX, MIN_PWM_IN,(MAX_PWM_IN+MIN_PWM_IN)/2 ,MAX_PWM_IN) ; 
   this->rc_in.PITCH = manualMap2(this->rc_in.PITCH,this->rc_in.PITCH, this->rc_in.PITCH  , this->rc_in.PITCH, MIN_PWM_IN,(MAX_PWM_IN+MIN_PWM_IN)/2 ,MAX_PWM_IN) ; 
-  this->rc_in.ROLL = manualMap2(this->rc_in.THR,this->rc_in.THR, this->rc_in.THR  , this->rc_in.THR, MIN_PWM_IN,(MAX_PWM_IN+MIN_PWM_IN)/2 ,MAX_PWM_IN) ; 
-  this->rc_in.ROLL = manualMap2(this->rc_in.YAW,this->rc_in.YAW, this->rc_in.YAW  , this->rc_in.YAW, MIN_PWM_IN,(MAX_PWM_IN+MIN_PWM_IN)/2 ,MAX_PWM_IN) ; 
+  this->rc_in.THR = manualMap2(this->rc_in.THR,this->rc_in.THR, this->rc_in.THR  , this->rc_in.THR, MIN_PWM_IN,(MAX_PWM_IN+MIN_PWM_IN)/2 ,MAX_PWM_IN) ; 
+  this->rc_in.YAW = manualMap2(this->rc_in.YAW,this->rc_in.YAW, this->rc_in.YAW  , this->rc_in.YAW, MIN_PWM_IN,(MAX_PWM_IN+MIN_PWM_IN)/2 ,MAX_PWM_IN) ; 
 
 }
 
