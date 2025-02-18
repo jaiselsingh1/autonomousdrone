@@ -36,17 +36,17 @@ void Mixer::mix(float throttle, float roll, float pitch, float yaw,
         pwm_out[1] = 900;
     }
 
-
-    // Serial.print(pitch_pwm) ;  Serial.print(", "); 
-    // Serial.print(thr_pwm) ;  Serial.print(", "); 
-    // Serial.print(roll_pwm) ;  Serial.print(", "); 
-    // Serial.print(yaw_pwm) ;  Serial.print(", \n"); 
+/*
+    Serial.print(pitch_pwm) ;  Serial.print(", "); 
+    Serial.print(thr_pwm) ;  Serial.print(", "); 
+    Serial.print(roll_pwm) ;  Serial.print(", "); 
+    Serial.print(yaw_pwm) ;  Serial.print(", \n"); 
     
-    // Serial.print(pwm_out[0]) ;  Serial.print(", "); 
-    // Serial.print(pwm_out[1]) ;  Serial.print(", "); 
-    // Serial.print(pwm_out[2]) ;  Serial.print(", "); 
-    // Serial.print(pwm_out[3]) ;  Serial.print(", \n"); 
-
+    Serial.print(pwm_out[0]) ;  Serial.print(", "); 
+    Serial.print(pwm_out[1]) ;  Serial.print(", "); 
+    Serial.print(pwm_out[2]) ;  Serial.print(", "); 
+    Serial.print(pwm_out[3]) ;  Serial.print(", \n"); 
+*/
 
     // Serial.print(throttle) ;  Serial.print(", "); 
     // Serial.print(roll) ;  Serial.print(", "); 

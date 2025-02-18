@@ -26,7 +26,7 @@
 #define RC_CHANS 6
 #define MAX_RC_CHANNELS 16
 
-#define MIN_PWM_IN 1000
+#define MIN_PWM_IN 900
 #define MAX_PWM_IN 2000
 #define PWM_JUMP_LIMIT 990
 #define PCINT_RX_BITS (1<<0),(1<<1),(1<<2),(1<<11),(1<<4),(1<<2)
