@@ -26,11 +26,13 @@
 #define RC_CHANS 6
 #define MAX_RC_CHANNELS 16
 
-#define MIN_PWM_IN 900
-#define MAX_PWM_IN 2000
+#define MIN_PWM_IN 950
+#define MAX_PWM_IN 1950
 #define PWM_JUMP_LIMIT 990
 #define PCINT_RX_BITS (1<<0),(1<<1),(1<<2),(1<<11),(1<<4),(1<<2)
 
+
+// channel colors: red, orange, purple, blue, green, yellow
 static uint8_t RX_Pins[RC_CHANS] = {15, 16, 17, 6, 8, 1};
 static uint16_t PCInt_RX_Pins[RC_CHANS] = {PCINT_RX_BITS};
 static volatile uint16_t rcValue[RC_CHANS];

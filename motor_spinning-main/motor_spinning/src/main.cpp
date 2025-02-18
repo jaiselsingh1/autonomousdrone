@@ -42,44 +42,45 @@ float kd[3] = {0.1, 0.1, 0.1};
 float KG[4] = {0 , .5, .5, .5};
 
 void setup() {
+    Serial.begin(9600);
     unsigned long timestamp[5];
 
     // initialize rc
     rc.init();
     timestamp[0] = millis();
-    Serial.print("RC initialized at: ");
+    Serial.println("RC initialized at: ");
     
 
     // initialize motors/servos
     motors.init();
     timestamp[1] = millis();
-    Serial.print("Motors initialized at: ");
+    Serial.println("Motors initialized at: ");
     
 
-    motors.calibrate();
-    timestamp[2] = millis();
-    Serial.print("Motors calibrated at: ");
+   // motors.calibrate();
+  //  timestamp[2] = millis();
+    //Serial.println("Motors calibrated at: ");
    
 
     // Poxyx_setup
     pozyx_setup();
     timestamp[3] = millis();
-    Serial.print("Pozyx setup at: ");
+    Serial.println("Pozyx setup at: ");
    
 
     // Initialize controller with gains
     controller.setPIDGains(kp, ki, kd);
     timestamp[4] = millis();
-    Serial.print("Controller gains set at: ");
+    Serial.println("Controller gains set at: ");
    
 
     // initialize peripherals
-    Serial.begin(9600);
+  
     while (!Serial) {
         ; // wait for serial port to connect
     }
     timestamp[5] = millis();
-    Serial.print("Serial initialized at: ");
+    Serial.println("Serial initialized at: ");
    
 
     pinMode(LED_BUILTIN, OUTPUT);
@@ -177,11 +178,11 @@ void loop() {
         pwm[2] = MIN_PWM_OUT ;
         pwm[3] = MIN_PWM_OUT ; 
         
-        Serial.println("KILLED");
-        Serial.print(pwm[0]) ; Serial.print(",") ; 
-        Serial.print(pwm[1]) ; Serial.print(",") ; 
-        Serial.print(pwm[2]) ; Serial.print(",") ; 
-        Serial.print(pwm[3]) ; 
+        // Serial.println("KILLED");
+        // Serial.print(pwm[0]) ; Serial.print(",") ; 
+        // Serial.print(pwm[1]) ; Serial.print(",") ; 
+        // Serial.print(pwm[2]) ; Serial.print(",") ; 
+        // Serial.print(pwm[3]) ; 
     }
     
     motors.update(pwm);
