@@ -12,6 +12,7 @@ public:
     void mix(float throttle, float roll, float pitch, float yaw, 
              uint16_t pwm_out[NUM_MOTORS]);
 
+
 private:
     static constexpr float SCALE_THROTTLE = (MAX_PWM_OUT - MIN_PWM_OUT) / 2.0f;
     static constexpr float OFFSET_THROTTLE = (MAX_PWM_OUT + MIN_PWM_OUT) / 2.0f;

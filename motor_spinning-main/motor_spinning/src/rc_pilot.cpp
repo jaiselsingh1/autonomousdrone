@@ -148,7 +148,7 @@ void RC_PILOT::update()
 
     // previous jump errors, could use a filtering
     //this->rcData[chan] = abs(this->rcData[chan] - this->rcData_previous[chan]) > PWM_JUMP_LIMIT ? this->rcData_previous[chan] : this->rcData[chan];
-    this->rcData_previous[chan] = this->rcData[chan];
+    //this->rcData_previous[chan] = this->rcData[chan];
   }
 
   

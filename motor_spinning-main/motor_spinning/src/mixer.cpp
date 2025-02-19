@@ -26,27 +26,26 @@ void Mixer::mix(float throttle, float roll, float pitch, float yaw,
     float pitch_pwm = scaleCommand(pitch);
     float yaw_pwm = scaleCommand(yaw);
 
-    // Mixing matrix (matches your reference implementation)
-    pwm_out[0] = LIMIT(thr_pwm - roll_pwm - pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);  // Front right CW
-    pwm_out[1] = LIMIT(thr_pwm - roll_pwm + pitch_pwm - yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Back right CCW
-    pwm_out[2] = LIMIT(thr_pwm + roll_pwm + pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Back left CW
-    pwm_out[3] = LIMIT(thr_pwm + roll_pwm - pitch_pwm - yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Front left CCW
+    // // Mixing matrix (matches your reference implementation)
+    // pwm_out[0] = LIMIT(thr_pwm - roll_pwm - pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);  // Front right CW
+    // pwm_out[1] = LIMIT(thr_pwm - roll_pwm + pitch_pwm - yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Back right CCW
+    // pwm_out[2] = LIMIT(thr_pwm + roll_pwm + pitch_pwm + yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Back left CW
+    // pwm_out[3] = LIMIT(thr_pwm + roll_pwm - pitch_pwm - yaw_pwm,MIN_PWM_OUT,MAX_PWM_OUT);   // Front left CCW
 
-    if ((pwm_out[0] < 910) && (pwm_out[2] < 910) && (pwm_out[3] < 910) && (pwm_out[1] < 950)) {
-        pwm_out[1] = 900;
-    }
+    pwm_out[0] = (thr_pwm - roll_pwm - pitch_pwm + yaw_pwm);  // Front right CW
+    pwm_out[1] = (thr_pwm - roll_pwm + pitch_pwm - yaw_pwm);   // Back right CCW
+    pwm_out[2] = (thr_pwm + roll_pwm + pitch_pwm + yaw_pwm);   // Back left CW
+    pwm_out[3] = (thr_pwm + roll_pwm - pitch_pwm - yaw_pwm);   // Front left CCW
 
-/*
-    Serial.print(pitch_pwm) ;  Serial.print(", "); 
-    Serial.print(thr_pwm) ;  Serial.print(", "); 
-    Serial.print(roll_pwm) ;  Serial.print(", "); 
-    Serial.print(yaw_pwm) ;  Serial.print(", \n"); 
+    // if ((pwm_out[0] < 910) && (pwm_out[2] < 910) && (pwm_out[3] < 910) && (pwm_out[1] < 950)) {
+    //     pwm_out[1] = 900;
+    // }
+    // Serial.print(thr_pwm) ;  Serial.print(", "); 
+    // Serial.print(pitch_pwm) ;  Serial.print(", "); 
     
-    Serial.print(pwm_out[0]) ;  Serial.print(", "); 
-    Serial.print(pwm_out[1]) ;  Serial.print(", "); 
-    Serial.print(pwm_out[2]) ;  Serial.print(", "); 
-    Serial.print(pwm_out[3]) ;  Serial.print(", \n"); 
-*/
+    // Serial.print(roll_pwm) ;  Serial.print(", "); 
+    // Serial.print(yaw_pwm) ;  Serial.print(", \n"); 
+    
 
     // Serial.print(throttle) ;  Serial.print(", "); 
     // Serial.print(roll) ;  Serial.print(", "); 

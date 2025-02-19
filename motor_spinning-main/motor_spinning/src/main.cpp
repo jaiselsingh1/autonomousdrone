@@ -12,6 +12,8 @@
 #include "controller.h"
 #include "mixer.h"
 #include <Arduino.h>
+#include "sensors.h"
+#include "sensor_prelim.h"
 float manualMap(float x, float in_min, float in_max, float out_min, float out_max) {
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
@@ -22,6 +24,7 @@ Motors motors;
 RC_PILOT rc;
 Controller controller;
 Mixer mixer;
+extern Sensors sens;
 
 unsigned long previousMillis = 0;
 const long interval = 500;
@@ -33,6 +36,8 @@ float kp[3] = {1.0, 1.0, 1.0};  // Roll, Pitch, Yaw
 float ki[3] = {0.0, 0.0, 0.0};
 float kd[3] = {0.1, 0.1, 0.1};
 
+float KG[4] = {0 , 4, 4, 4};
+
 void setup() {
     // initialize rc
     Serial.begin(9600);
@@ -43,7 +48,8 @@ void setup() {
     motors.calibrate();
     // Initialize controller with gains
     controller.setPIDGains(kp, ki, kd);
-    
+
+    pozyx_setup();
     // initialize peripherals
     
     while (!Serial) {
@@ -57,24 +63,25 @@ void loop() {
     
     unsigned long currentMillis = millis();
     float dt = (currentMillis - previousMillis) / 1000.0f; // Convert to seconds
-    
+    sens.update();
     rc.update();
+    
     if (rc.rc_in.AUX < 1500){
         if(rc.rc_in.AUX2 > 1200) {
             // Manual RC control mode
-            float throttle = manualMap(rc.rc_in.THR, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
-            float roll = manualMap(rc.rc_in.ROLL, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
-            float pitch = manualMap(rc.rc_in.PITCH, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
-            float yaw = manualMap(rc.rc_in.YAW, MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
-            
-            if (currentMillis - previousMillis >= interval) {
-                Serial.print(throttle); Serial.print(", "); 
-                Serial.print(roll); Serial.print(", "); 
-                Serial.print(pitch); Serial.print(", "); 
-                Serial.print(yaw); Serial.print(", "); 
-                Serial.print("\n");
+            float throttle = manualMap(rc.rc_in.THR - KG[0], MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
+            float roll = manualMap(rc.rc_in.ROLL  + KG[1] * sens.data.gyr[0], MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
+            float pitch = manualMap(rc.rc_in.PITCH - KG[2] * sens.data.gyr[1], MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
+            float yaw = manualMap(rc.rc_in.YAW - KG[3] * sens.data.gyr[2], MIN_PWM_OUT, MAX_PWM_OUT, -1.0, 1.0);
+            //sens.print();
+            // if (currentMillis - previousMillis >= interval) {
+            //     //  Serial.print(throttle); Serial.print(", "); 
+            //     //  Serial.print(roll); Serial.print(", "); 
+            //     //  Serial.print(pitch); Serial.print(", "); 
+            //     //  Serial.print(yaw); Serial.print(", "); 
+            //     //  Serial.print("\n");
         
-            }
+            // }
             
 
             // Serial.print(rc.rc_in.THR) ;  Serial.print(", "); 
@@ -87,7 +94,7 @@ void loop() {
             
             //Serial.println("MANUAL");
             if (rc.rc_in.AUX2 > 1700){
-                Serial.println("Drop Payload") ; 
+                 Serial.println("Drop Payload") ; 
             }
 
         } else {
@@ -129,13 +136,14 @@ void loop() {
     
     if (currentMillis - previousMillis >= interval) {
         previousMillis = currentMillis;
-        rc.print(); // should be commented out for flight
+        // rc.print(); // should be commented out for flight
+        sens.print();   
+         
 
-
-        Serial.print(pwm[0]) ; Serial.print(",") ; 
-        Serial.print(pwm[1]) ; Serial.print(",") ; 
-        Serial.print(pwm[2]) ; Serial.print(",") ; 
-        Serial.print(pwm[3]) ; Serial.print("\n");
+        // Serial.print(pwm[0]) ; Serial.print(",") ; 
+        // Serial.print(pwm[1]) ; Serial.print(",") ; 
+        // Serial.print(pwm[2]) ; Serial.print(",") ; 
+        // Serial.print(pwm[3]) ; Serial.print("\n");
     }
     
     // read/write datalink msg
